@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://activemq.apache.org/schema/core
+       http://activemq.apache.org/schema/core/activemq-core.xsd
+       http://www.springframework.org/schema/jms
+       http://www.springframework.org/schema/jms/spring-jms.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="ru.mrchebik.receiver" />
+
+    <bean id="receiver"
+          class="ru.mrchebik.receiver.service.Receiver"/>
+
+    <amq:connectionFactory id="connectionFactory"
+                           trustAllPackages="true"/> <!-- for Serialization -->
+
+    <bean id="jmsTemplate"
+          class="org.springframework.jms.core.JmsTemplate"
+          c:_0-ref="connectionFactory"
+          p:defaultDestinationName="example-alert-queue" />
+
+    <jms:listener-container>
+        <jms:listener destination="example-alert-queue"
+                      ref="receiver"
+                      method="retrieveExample" />
+    </jms:listener-container>
+</beans>

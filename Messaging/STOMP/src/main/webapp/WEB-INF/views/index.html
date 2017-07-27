@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        var sock = new SockJS('example');
+
+        var stomp = Stomp.over(sock);
+
+        var payload = JSON.stringify({ 'message': 'Hello World!' });
+
+        stomp.connect('guest', 'guest', function (frame) {
+            stomp.subscribe("/topic/shout", handleJSON);
+            stomp.subscribe("/topic/exampleFeed", handleJSON);
+            stomp.subscribe("/app/testStomp", handleJSON);
+            // Spring Security -- stomp.subscribe("/user/queue/notifications", handleJSON);
+            stomp.subscribe("/queue/errors");
+
+            stomp.send("/app/testStomp", {}, payload);
+        });
+        
+        function handleJSON(incoming) {
+            if (incoming.body) {
+                var shout = JSON.parse(incoming.body);
+                console.log('Received: ', shout);
+            }
+        }
+    </script>
+</head>
+</html>

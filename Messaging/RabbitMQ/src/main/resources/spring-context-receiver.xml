@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/rabbit
+       http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+
+    <context:component-scan base-package="ru.mrchebik" />
+
+    <bean id="exampleListener"
+          class="ru.mrchebik.receiver.service.Receiver" />
+
+    <rabbit:connection-factory id="connectionFactory"/>
+
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:template id="rabbitTemplate"
+                     connection-factory="connectionFactory" />
+
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="exampleListener"
+                         method="retrieveExample"
+                         queue-names="example.alert"/>
+    </rabbit:listener-container>
+</beans>
