@@ -6,10 +6,10 @@
 [Spring in Action](https://www.amazon.com/Spring-Action-Covers-4/dp/161729120X), and my developments.
 
 ## Notes
-[Spring (Cache, Data, MVC, Security, XML configuration)](https://github.com/MrChebik/Notes).
+[Spring (Data, MVC, Security, XML configuration)](https://github.com/MrChebik/Notes).
 
 ## Blog
-[Spring (Data, MVC, Security, XML configuration)](https://github.com/MrChebik/Blog).
+[Spring (Cache, Data, MVC, Security, XML configuration)](https://github.com/MrChebik/Blog).
 
 ## OSPicture
 [Spring Boot (Data, MVC, RESTful, Java Configuration)](https://github.com/MrChebik/OSPicture).  
